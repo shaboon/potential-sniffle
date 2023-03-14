@@ -1,0 +1,39 @@
+:root {
+    --purple: #6a06c7;
+}
+
+* {
+
+}
+
+html {
+
+}
+
+body {
+    background-color: white;
+}
+
+.topbar {
+    text-decoration-line: none;
+    color: #6a06c7;
+    font-weight: 1.5em;
+}
+
+.questionbox {
+    display: flex;
+    height: auto;
+    width: auto;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.questionbutt {
+    border-radius: 10px;
+    background-color: #6a06c7;
+    padding: 10px;
+    height: 20%;
+    width: fit-content;
+    color: #ffffff;
+}
