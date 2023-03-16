@@ -1,16 +1,20 @@
 var panikStart = document.querySelector(".startbutton");
+var revealQuiz = document.querySelector(".questionbox");
 var gudAnswer = document.querySelector(".gudchoice");
 var oopsAnswer = document.querySelector(".badchoice");
 var answerResult = document.querySelector(".reveal-answer");
 var timerEl = document.querySelector(".clock");
 
-var score;
-var displayScore;
+var score = "Nan";
+var displayScore = "";
 var timeLeft;
 var highScore;
 
 function quizStart() {
-  timer;
+  console.log("Start Clicked");
+  revealQuiz.setAttribute("style", "visibility: visible;");
+  score = 0;
+  timer();
 }
 
 function timer() {
@@ -19,29 +23,39 @@ function timer() {
   var timeInterval = setInterval(function () {
     timeLeft--;
     timerEl.textContent = timeLeft;
-    if (timeLeft === 0) {
+    console.log(timeLeft + " seconds left...");
+    if (timeLeft <= 0) {
       clearInterval(timeInterval);
+      limitReached();
     }
-
-    //
   }, 1000);
 }
 
 function rightAnswer() {
   score++;
 
+  console.log(score);
   answerResult.textContent = "Correct!";
 
   switchQuestion;
 }
 
 function wrongAnswer() {
-  timeLeft - 10;
+  if (timeLeft >= 10) {
+    timeLeft -= 10;
+  } else {
+    timeLeft = 0;
+    limitReached();
+    return;
+  }
+
+  console.log(score);
 }
 
 function switchQuestion() {}
 
 function limitReached() {
+  alert("Dang, you lost");
   displayScore = score * 15;
 }
 
@@ -51,19 +65,14 @@ function quizWin() {
   }
 }
 
-function highscoreLog() {}
+// function highscoreLog() {}
 
-// localStorage.setItem("Highscore", JSON.stringify(studentGrade));
+// localStorage.setItem("highScore", JSON.stringify(studentGrade));
 // renderMessage();
 
-// Has not been re-adjusted
-function renderMessage() {
-  var lastGrade = JSON.parse(localStorage.getItem("studentGrade"));
-  if (lastGrade !== null) {
-    document.querySelector(".message").textContent =
-      lastGrade.student + " received a/an " + lastGrade.grade;
-  }
-}
+// function renderMessage() {
+//   var highScore = JSON.parse(localStorage.getItem("highScore"));
+// }
 
 panikStart.addEventListener("click", quizStart);
 gudAnswer.addEventListener("click", rightAnswer);
