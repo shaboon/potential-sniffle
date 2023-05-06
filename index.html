@@ -15,19 +15,27 @@
         <div class = "topbar clock">75</div>
     </header>
         <main>
-            <div class="questionbox">
-                <p>Question 1: Where is your heart?</p>
-                <ul>
-                    <button class="questionbutt badchoice">Only you can know that...</button>
-                    <button class="questionbutt gudchoice">Till then I'll wait for the circus to come to town...</button>
-                    <button class="questionbutt">Girl! Where is your heart at?</button>
-                    <button class="questionbutt">I could never know that...</button>
-                </ul>
-                <section class = "reveal-card">
-                    <p class = "reveal-answer">Correct!</p>
-                </section>
-            </div>    
+            <div class="questionbox hidden">
+                <p class="question"></p>
+                <ol>
+                    <button class="questionbutt but1" id=""></button>
+                    <button class="questionbutt but2" id=""></button>
+                    <button class="questionbutt but3" id=""></button>
+                    <button class="questionbutt but4" id=""></button>
+                </ol>
+            </div>
+            <section class = "reveal-card hidden">
+                <p class = "reveal-answer">Error!</p>
+            </section>
         </main>
+        <form class="form">
+            <input type="text" maxlength="3" placeholder="Your Initals Please">
+            <div class="score"></div>
+            <button class="submit">Submit</button>
+            <ol class="previous-scores">
+                <li></li>
+            </ol>
+        </form>
     <aside class="starterbox">
         <div>
             <button class="startbutton">START!</button>
@@ -36,5 +44,6 @@
     </aside>
 
     <script src="./assets/js/script.js"></script>
+    <script src="./assets/js/highscore.js"></script>
 </body>
 </html>

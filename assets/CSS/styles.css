@@ -3,11 +3,22 @@
 }
 
 * {
-    
+
 }
 
 body {
     background-color: #242424;
+    width: 100vw;
+    height: 100vh;
+}
+
+main {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
 }
 
 .topbar {
@@ -16,22 +27,77 @@ body {
     font-weight: 1.5em;
 }
 
-.questionbox {
+.questionbox, .form {
     display: flex;
-    height: auto;
-    width: auto;
+    height: 60%;
+    width: 40%;
     background-color: #696969;
     justify-content: center;
     align-items: center;
     visibility: none;
     border-radius: 10px;
+    font-size: 36px;
+    font-weight: 200;
+}
+
+.form {
+    position: fixed;
+    top: 40%;
+    right: 30%;
+    width: 40%;
+    height: 40%;
+    background-color: #696969;
+    visibility: hidden;
+}
+
+.question {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    margin: 30px;
 }
 
 .questionbutt {
+    display: flex;
+    flex-direction: column;
     border-radius: 10px;
     background-color: #6a06c7;
     padding: 10px;
     height: 20%;
     width: fit-content;
     color: #ffffff;
+}
+
+.reveal-card {
+    display: flex;
+    width: auto;
+    height: auto;
+}
+
+.questionbutt:active {
+    box-shadow: inset 10px 5px 5px #1b1b1b;
+    }
+
+.reveal-card {
+    background-color: #696969;
+}
+
+.startbutton {
+    display: flex;
+    position: fixed;
+    top: 50%;
+    right: 45%;
+    border: none;
+    border-radius: 10px;
+    background-color: #6a06c7;
+    padding: 10px;
+    width: fit-content;
+    font-size: 3.5em;
+    color: #ffffff;
+}
+
+.hidden {
+    visibility: hidden;
 }
