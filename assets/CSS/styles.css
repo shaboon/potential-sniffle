@@ -2,14 +2,32 @@
     --purple: #6a06c7;
 }
 
-* {
-
-}
-
 body {
     background-color: #242424;
     width: 100vw;
     height: 100vh;
+}
+
+.topbar {
+    display: flex;
+    flex-direction: row;
+}
+
+.highscore {
+    display: flex;
+    padding: 15px;
+    width: 50%;
+    color: #d4d4d4;
+    font-size: 2.5em;
+}
+
+.clock {
+    display: flex;
+    width: 50%;
+    margin: 15px;
+    font-size: 4.0em;
+    color: #d4d4d4;
+    justify-content: end;
 }
 
 main {
@@ -23,7 +41,6 @@ main {
 
 .topbar {
     text-decoration-line: none;
-    color: #6a06c7;
     font-weight: 1.5em;
 }
 
@@ -41,6 +58,7 @@ main {
 }
 
 .form {
+    flex-direction: column;
     position: fixed;
     top: 40%;
     right: 30%;
@@ -48,6 +66,7 @@ main {
     height: 40%;
     background-color: #696969;
     visibility: hidden;
+    justify-content: center;
 }
 
 .question {
@@ -59,7 +78,7 @@ main {
     margin: 30px;
 }
 
-.questionbutt {
+.questionbutt, .submit, .refresh {
     display: flex;
     flex-direction: column;
     border-radius: 10px;
@@ -100,4 +119,113 @@ main {
 
 .hidden {
     visibility: hidden;
+}
+
+ol {
+    list-style: decimal;
+    color: white;
+}
+
+.ui {
+    display: flex;
+    flex-direction: row;
+    justify-content: baseline;
+    text-align: center;
+}
+
+.ui-buttons {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.ui-buttons button {
+    display: flex;
+    flex-direction: row;
+    width: 40%;
+    height: fit-content;
+    justify-content: center;
+}
+
+.form input {
+    display: flex;
+    width: 50%;
+    height: 50px;
+    border: none;
+    margin-right: 5px;
+    border-radius: 15px 0px 0px 15px;
+    text-align: center;
+}
+
+.score {
+    display: flex;
+    width: 50%;
+    height: 50px;
+    background-color: white;
+    border-radius: 0px 15px 15px 0px;
+    justify-content: center;
+    align-items: center;
+}
+
+.submit {
+    margin: 10px;
+    border-radius: 20px 0px 0px 20px;
+}
+
+.refresh {
+    margin: 10px;
+    border-radius: 0px 20px 20px 0px;
+}
+
+.previous-scores {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    width: 40%;
+    background: #3d3d3d;
+    border-radius: 15px;
+    color: #ffffff;
+}
+
+/* Separate Highscore Page */
+
+.scorepage {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 40%;
+    right: 30%;
+    width: 40%;
+    height: 40%;
+    background-color: #696969;
+    border-radius: 25px;
+    align-items: center;
+}
+
+.show-scores {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    width: 40%;
+    background: #3d3d3d;
+    border-radius: 15px;
+    color: #ffffff;
+    margin: 15px;
+}
+
+.show-scores li {
+    background-color: white;
+    padding: 5px;
+    width: 50px;
+    border-radius: 0px 25% 25% 0px;
+    margin: 5px;
+    color: black;
+}
+
+.show-scores li::marker {
+    background-color: white;
+    color: white;
 }

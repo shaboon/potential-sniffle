@@ -11,8 +11,10 @@
 </head>
 <body>
     <header>
-        <div class = "topbar highscore"><a href="highscores.html">View Highscores</a></div>        
-        <div class = "topbar clock">75</div>
+        <section class="topbar">
+            <div class = "highscore"><a href="highscores.html">View Highscores</a></div>        
+            <div class = "clock">75</div>
+        </section>
     </header>
         <main>
             <div class="questionbox hidden">
@@ -29,11 +31,15 @@
             </section>
         </main>
         <form class="form">
-            <input type="text" maxlength="3" placeholder="Your Initals Please">
-            <div class="score"></div>
-            <button class="submit">Submit</button>
-            <ol class="previous-scores">
-                <li></li>
+            <section class="ui">
+                <input type="text" class="initials" maxlength="3" placeholder="Your Initals Please">
+                <div class="score">95</div>
+            </section>
+            <section class="ui-buttons">
+                <button class="submit">Submit</button>
+                <button class="refresh">Play Again</button>
+            </section>
+            <ol class="previous-scores"> Past Scores:
             </ol>
         </form>
     <aside class="starterbox">

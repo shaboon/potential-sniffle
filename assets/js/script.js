@@ -1,14 +1,23 @@
+var scoreLink = document.querySelector(".highscore");
+var timerEl = document.querySelector(".clock");
+
 var panikStart = document.querySelector(".startbutton");
 var revealQuiz = document.querySelector(".questionbox");
-var revealScore = document.querySelector(".form");
+var scoreList = document.querySelector(".previous-scores");
 var ask = document.querySelector(".question");
 var buttonOne = document.querySelector(".but1");
 var buttonTwo = document.querySelector(".but2");
 var buttonThree = document.querySelector(".but3");
 var buttonFour = document.querySelector(".but4");
+
 var answerResult = document.querySelector(".reveal-answer");
-var timerEl = document.querySelector(".clock");
+
+var revealScore = document.querySelector(".form");
+var ui = document.querySelector(".ui");
 var userInitials = document.querySelector(".initials");
+var showScore = document.querySelector(".score");
+var formSubmit = document.querySelector(".submit");
+var tryAgain = document.querySelector(".refresh");
 
 var progress = 0;
 var score = "Nan";
@@ -122,23 +131,25 @@ function switchQuestion() {
     }),
   ];
 
-  console.log(quiz);
-  console.log(quiz[0].but1.but1class);
-  ask.innerHTML = quiz[progress - 1].question;
-  buttonOne.innerHTML = quiz[progress - 1].but1.choice;
-  buttonOne.setAttribute("id", quiz[progress - 1].but1.but1class);
-  buttonTwo.innerHTML = quiz[progress - 1].but2.choice;
-  buttonTwo.setAttribute("id", quiz[progress - 1].but2.but2class);
-  buttonThree.innerHTML = quiz[progress - 1].but3.choice;
-  buttonThree.setAttribute("id", quiz[progress - 1].but3.but3class);
-  buttonFour.innerHTML = quiz[progress - 1].but4.choice;
-  buttonFour.setAttribute("id", quiz[progress - 1].but4.but4class);
+  if (progress < 6) {
+    ask.innerHTML = quiz[progress - 1].question;
+    buttonOne.innerHTML = quiz[progress - 1].but1.choice;
+    buttonOne.setAttribute("id", quiz[progress - 1].but1.but1class);
+    buttonTwo.innerHTML = quiz[progress - 1].but2.choice;
+    buttonTwo.setAttribute("id", quiz[progress - 1].but2.but2class);
+    buttonThree.innerHTML = quiz[progress - 1].but3.choice;
+    buttonThree.setAttribute("id", quiz[progress - 1].but3.but3class);
+    buttonFour.innerHTML = quiz[progress - 1].but4.choice;
+    buttonFour.setAttribute("id", quiz[progress - 1].but4.but4class);
 
-  var gudAnswer = document.querySelector("#gudchoice");
-  var oopsAnswer = document.querySelector("#badchoice");
+    var gudAnswer = document.querySelector("#gudchoice");
+    var oopsAnswer = document.querySelectorAll("#badchoice");
 
-  gudAnswer.addEventListener("click", rightAnswer);
-  oopsAnswer.addEventListener("click", wrongAnswer);
+    gudAnswer.addEventListener("click", rightAnswer);
+    for (var i = 0; i < oopsAnswer.length; i++) {
+      oopsAnswer[i].addEventListener("click", wrongAnswer);
+    }
+  }
 }
 
 function quizStart() {
@@ -147,22 +158,22 @@ function quizStart() {
   revealQuiz.setAttribute("style", "visibility: visible;");
   switchQuestion();
   score = 0;
-  // timer();
+  timer();
 }
 
-// function timer() {
-//   timeLeft = 75;
+function timer() {
+  timeLeft = 75;
 
-//   var timeInterval = setInterval(function () {
-//     timeLeft--;
-//     timerEl.textContent = timeLeft;
-//     console.log(timeLeft + " seconds left...");
-//     if (timeLeft <= 0) {
-//       clearInterval(timeInterval);
-//       limitReached();
-//     }
-//   }, 1000);
-// }
+  var timeInterval = setInterval(function () {
+    timeLeft--;
+    timerEl.textContent = timeLeft;
+    console.log(timeLeft + " seconds left...");
+    if (timeLeft <= 0) {
+      clearInterval(timeInterval);
+      limitReached();
+    }
+  }, 1000);
+}
 
 function progressEval() {
   if (progress === 6) {
@@ -199,38 +210,58 @@ function wrongAnswer() {
 
 function limitReached() {
   alert("Dang, your out of time...");
-  displayScore = score * 4 + timeLeft;
 
   quizEnd();
 }
 
 function quizEnd() {
+  clearInterval();
+  if (typeof timeLeft !== "number") {
+    return alert("Internal Error, Sorry");
+  }
+  if (score >= 1) {
+    displayScore = score * 5 + timeLeft;
+  } else {
+    alert("You Need to Get at Least One Answer Correct, Please Try Again");
+    return document.location.reload();
+  }
+
+  formSubmit.addEventListener("click", highscoreLog);
+
   console.log(`quizEnd seeable score is ${score}`);
+  console.log(`quizEnd display score is ${displayScore}`);
   revealQuiz.setAttribute("style", "visibility: hidden;");
   answerResult.setAttribute("style", "visibility: hidden;");
   revealScore.setAttribute("style", "visibility: visible;");
-  if (score >= 1) {
-    displayScore = score * 4 + timeLeft;
-  } else {
-    alert("You Need to Get at Least One Answer Correct, Please Try Again");
-  }
+  showScore.innerHTML = `Final Score: ${displayScore}`;
 }
 
-// function highscoreLog() {
-//   var loggedScore = {
-//     intials: userInitials.value.trim(),
-//     playerScore: displayScore,
-//   };
-//   localStorage.setItem("highScore", JSON.stringify(loggedScore));
-// }
+function highscoreLog() {
+  ui.setAttribute("style", "visibility: hidden;");
 
-// function renderScore() {
-//   var highScore = JSON.parse(localStorage.getItem("highScore"));
-//   var displayScore = (createEl("p").textContent = highScore);
-//   scoreBoard.appendChild(displayScore);
-// }
+  console.log(`highscoreLog Started`);
+  event.preventDefault();
+  var loggedScore = {
+    intials: userInitials.value.trim(),
+    playerScore: displayScore,
+  };
+  localStorage.setItem("highScore", JSON.stringify(loggedScore));
+  renderScore();
+}
 
-// highscoreLog("submit", highscoreLog);
-// renderScore();
+function restart() {
+  document.location.reload();
+}
+
+function renderScore() {
+  var highScore = JSON.parse(localStorage.getItem("highScore"));
+  console.log(highScore);
+  var logScore = (createElement(
+    "li"
+  ).textContent = `${highScore.intials} - ${highScore.playerScore}}`);
+  scoreList.appendChild(logScore);
+}
 
 panikStart.addEventListener("click", quizStart);
+tryAgain.addEventListener("click", restart);
+document.onload = renderScore();
