@@ -21,9 +21,11 @@ var tryAgain = document.querySelector(".refresh");
 
 var progress = 0;
 var score = "Nan";
+var storedTime = 0;
 var displayScore = "";
 var timeLeft;
 var highScore;
+var endValidator = false;
 
 function switchQuestion() {
   progress++;
@@ -82,11 +84,11 @@ function switchQuestion() {
       },
       but3: {
         choice: "parenthesis",
-        but1class: "badchoice",
+        but3class: "badchoice",
       },
       but4: {
         choice: "square brackets",
-        but1class: "badchoice",
+        but4class: "badchoice",
       },
     }),
     (quiz4 = {
@@ -132,6 +134,7 @@ function switchQuestion() {
   ];
 
   if (progress < 6) {
+    console.log(quiz[progress - 1]);
     ask.innerHTML = quiz[progress - 1].question;
     buttonOne.innerHTML = quiz[progress - 1].but1.choice;
     buttonOne.setAttribute("id", quiz[progress - 1].but1.but1class);
@@ -169,14 +172,18 @@ function timer() {
     timerEl.textContent = timeLeft;
     console.log(timeLeft + " seconds left...");
     if (timeLeft <= 0) {
+      timeLeft = 0;
+      timerEl.textContent = timeLeft;
       clearInterval(timeInterval);
-      limitReached();
+      if (endValidator === false) {
+        quizEnd();
+      }
     }
   }, 1000);
 }
 
 function progressEval() {
-  if (progress === 6) {
+  if (progress === 7) {
     return quizEnd();
   }
   return;
@@ -202,25 +209,22 @@ function wrongAnswer() {
     console.log(score);
     switchQuestion();
   } else {
-    timeLeft = 0;
-    limitReached();
+    quizEnd();
     return;
   }
 }
 
-function limitReached() {
-  alert("Dang, your out of time...");
-
-  quizEnd();
-}
-
 function quizEnd() {
-  clearInterval();
+  endValidator = true;
   if (typeof timeLeft !== "number") {
     return alert("Internal Error, Sorry");
   }
   if (score >= 1) {
-    displayScore = score * 5 + timeLeft;
+    console.log(`quizEnd timeLeft is ${timeLeft}`);
+    console.log(`quizEnd storedTime is ${storedTime}`);
+    storedTime = timeLeft;
+    timeLeft = "";
+    displayScore = score * 5 + storedTime;
   } else {
     alert("You Need to Get at Least One Answer Correct, Please Try Again");
     return document.location.reload();
@@ -228,10 +232,12 @@ function quizEnd() {
 
   formSubmit.addEventListener("click", highscoreLog);
 
+  var revealCard = document.querySelector(".reveal-card");
+
   console.log(`quizEnd seeable score is ${score}`);
   console.log(`quizEnd display score is ${displayScore}`);
   revealQuiz.setAttribute("style", "visibility: hidden;");
-  answerResult.setAttribute("style", "visibility: hidden;");
+  revealCard.setAttribute("style", "display: none;");
   revealScore.setAttribute("style", "visibility: visible;");
   showScore.innerHTML = `Final Score: ${displayScore}`;
 }
@@ -255,11 +261,11 @@ function restart() {
 
 function renderScore() {
   var highScore = JSON.parse(localStorage.getItem("highScore"));
-  console.log(highScore);
-  var logScore = (createElement(
-    "li"
-  ).textContent = `${highScore.intials} - ${highScore.playerScore}}`);
-  scoreList.appendChild(logScore);
+  if (highScore !== null) {
+    var scoreListEl = document.createElement("li");
+    scoreListEl.textContent = `${highScore.intials} - ${highScore.playerScore}`;
+    scoreList.appendChild(scoreListEl);
+  }
 }
 
 panikStart.addEventListener("click", quizStart);

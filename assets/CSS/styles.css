@@ -91,16 +91,24 @@ main {
 
 .reveal-card {
     display: flex;
+    position: fixed;
+    left: 35%;
+    bottom: 15%;
     width: auto;
     height: auto;
+    z-index: 1;
 }
 
 .questionbutt:active {
     box-shadow: inset 10px 5px 5px #1b1b1b;
     }
 
-.reveal-card {
-    background-color: #696969;
+.reveal-answer {
+    border-radius: 20px;
+    padding: 20px;
+    background-color: #d4d4d4;
+    font-size: 1.5em;
+    font-weight: bold;
 }
 
 .startbutton {
@@ -191,6 +199,40 @@ ol {
 
 /* Separate Highscore Page */
 
+.scoreheader {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.return {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    width: 95%;
+}
+
+.scorch {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 5%;
+    margin: 15px;
+    border: none;
+    border-radius: 15px;
+    padding: 20px;
+    background-color: darkred;
+    color: white;
+    font-size: 1.2em;
+    font-weight: 100px;
+}
+
+.scorch:active {
+    box-shadow: inset 10px 5px 5px #1b1b1b;
+}
+
 .scorepage {
     display: flex;
     flex-direction: column;
@@ -219,7 +261,7 @@ ol {
 .show-scores li {
     background-color: white;
     padding: 5px;
-    width: 50px;
+    width: 50%;
     border-radius: 0px 25% 25% 0px;
     margin: 5px;
     color: black;
